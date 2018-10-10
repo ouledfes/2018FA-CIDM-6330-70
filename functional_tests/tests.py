@@ -1,9 +1,10 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import unittest
 
-class NewVisitorTest(unittest.TestCase):
+
+class NewVisitorTest(LiveServerTestCase):
 
 	def setUp(self):
 		self.browser = webdriver.Firefox()
@@ -21,7 +22,7 @@ class NewVisitorTest(unittest.TestCase):
 		# Manal has heard about a cool new online to-do-app.
 		# She goes to check out its homepage
 
-		self.browser.get('http://localhost:8000')
+		self.browser.get(self.live_server_url)
 
 		# She notices the page title and the header mention to-do lists
 		self.assertIn('To-Do', self.browser.title)
@@ -42,7 +43,7 @@ class NewVisitorTest(unittest.TestCase):
 		# When she hits <enter>, the page updates, and now the page lists
 		# "1: Buy mineral water" as an item in a to-do list
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(10)
+		time.sleep(5)
 		#self.check_for_row_in_list_table('1: Buy mineral water.')
 
 		#table = self.browser.find_element_by_id('id_list_table')
@@ -58,7 +59,7 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Replace water in the hair removal machine.')
 		inputbox.send_keys(Keys.ENTER)
-		time.sleep(10)
+		time.sleep(5)
 		
 
 		# The page updates again, and now shows both items on her list.
@@ -75,6 +76,6 @@ class NewVisitorTest(unittest.TestCase):
 
 		# satisfied, she goes back to sleep.
 		
-if __name__ == '__main__':
-	unittest.main(warnings='ignore')
+#if __name__ == '__main__':
+#	unittest.main(warnings='ignore')
 
