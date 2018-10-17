@@ -73,13 +73,13 @@ class NewVisitorTest(LiveServerTestCase):
 		# Manal starts a new to_do list
 		self.browser.get(self.live_server_url)
 		inputbox = self.browser.find_element_by_id('id_new_item')
-		inputbox.send_keys('Buy mineral water')
+		inputbox.send_keys('Buy mineral water.')
 		inputbox.send_keys(Keys.ENTER)
-		self.wait_for_row_in_list_table('1: Buy mineral water')
+		self.wait_for_row_in_list_table('1: Buy mineral water.')
 
 		# She notices that her list has a unique URL
 		manal_list_url = self.browser.current_url
-		self.assertRegex(edith_list_url, '/lists/.+')
+		self.assertRegex(manal_list_url, '/lists/.+')
 
 		# Now a new user, Francis, comes along to the site.
 
@@ -92,8 +92,8 @@ class NewVisitorTest(LiveServerTestCase):
 		# list
 		self.browser.get(self.live_server_url)
 		page_text = self.browser.find_element_by_tag_name('body').text
-		self.assertNotIn('Buy peacock feathers', page_text)
-		self.assertNotIn('make a fly', page_text)
+		self.assertNotIn('Buy mineral water.', page_text)
+		self.assertNotIn('Replace water in the hair removal machine.', page_text)
 
 		# Francis starts a new list by entering a new item. He
 		# is less interesting than Edith...
@@ -109,7 +109,7 @@ class NewVisitorTest(LiveServerTestCase):
 
 		# Again, there is no trace of Edith's list
 		page_text = self.browser.find_element_by_tag_name('body').text
-		self.assertNotIn('Buy peacock feathers', page_text)
+		self.assertNotIn('Buy mineral water.', page_text)
 		self.assertIn('Buy milk', page_text)
 
 		# Satisfied, they both go back to sleep
